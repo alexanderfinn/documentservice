@@ -25,4 +25,8 @@ public class DocumentMetadata {
   public String getDocumentId() {
     return documentId;
   }
+
+  public boolean validateKey(String documentKey) {
+    return this.documentKey.equals(documentKey);
+  }
 }
