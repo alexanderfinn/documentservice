@@ -7,26 +7,19 @@ public class DocumentMetadata {
 
   private final String documentId;
 
-  private final String documentKey;
+  private final String accessKey;
 
-  public DocumentMetadata(String documentId, String documentKey) {
+  public DocumentMetadata(String documentId, String accessKey) {
     this.documentId = documentId;
-    this.documentKey = documentKey;
-  }
-
-  public DocumentMetadata() {
-    this(generateId(), "");
-  }
-
-  private static String generateId() {
-    return "123";
+    this.accessKey = accessKey;
   }
 
   public String getDocumentId() {
     return documentId;
   }
 
-  public boolean validateKey(String documentKey) {
-    return this.documentKey.equals(documentKey);
+  public boolean validateKey(String accessKey) {
+    return this.accessKey.equals(accessKey);
   }
+
 }

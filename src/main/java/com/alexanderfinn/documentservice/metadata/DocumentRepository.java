@@ -11,10 +11,9 @@ public interface DocumentRepository {
 
   DocumentMetadata get(String documentId, String documentKey) throws DocumentNotFoundException, DocumentNotAuthorizedException;
 
-  DocumentMetadata create();
-
   void delete(String documentId, String documentKey) throws DocumentNotFoundException, DocumentNotAuthorizedException;
 
-  void put(DocumentMetadata metadata) throws DocumentAlreadyExistsException;
+  void put(DocumentMetadata metadata);
 
+  boolean exists(String documentId);
 }

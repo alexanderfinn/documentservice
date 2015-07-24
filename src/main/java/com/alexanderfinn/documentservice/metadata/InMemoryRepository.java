@@ -16,15 +16,10 @@ public class InMemoryRepository implements DocumentRepository {
 
   @Override
   public DocumentMetadata get(String documentId, String documentKey) throws DocumentNotFoundException, DocumentNotAuthorizedException {
-    DocumentMetadata metadata = map.get(documentKey);
+    DocumentMetadata metadata = map.get(documentId);
     if (metadata == null) throw new DocumentNotFoundException();
     if (!metadata.validateKey(documentKey)) throw new DocumentNotAuthorizedException();
     return metadata;
-  }
-
-  @Override
-  public DocumentMetadata create() {
-    return new DocumentMetadata();
   }
 
   @Override
@@ -34,10 +29,12 @@ public class InMemoryRepository implements DocumentRepository {
   }
 
   @Override
-  public void put(DocumentMetadata metadata) throws DocumentAlreadyExistsException {
-    if (map.containsKey(metadata.getDocumentId())) {
-      throw new DocumentAlreadyExistsException();
-    }
+  public void put(DocumentMetadata metadata) {
     map.put(metadata.getDocumentId(), metadata);
+  }
+
+  @Override
+  public boolean exists(String documentId) {
+    return map.containsKey(documentId);
   }
 }
