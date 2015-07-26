@@ -1,6 +1,6 @@
-package com.alexanderfinn.documentservice.api.v1;
+package documentservice.api.v1;
 
-import com.alexanderfinn.documentservice.metadata.DocumentMetadata;
+import documentservice.metadata.DocumentMetadata;
 
 /**
  * @author Alexander Finn
@@ -15,5 +15,9 @@ public class GetDocumentResponse extends APIResponse {
 
   public GetDocumentResponse() {
     documentMetadata = null;
+  }
+
+  public DocumentMetadata getDocumentMetadata() {
+    return documentMetadata;
   }
 }

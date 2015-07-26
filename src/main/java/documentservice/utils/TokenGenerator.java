@@ -1,4 +1,4 @@
-package com.alexanderfinn.documentservice.utils;
+package documentservice.utils;
 
 import java.util.UUID;
 

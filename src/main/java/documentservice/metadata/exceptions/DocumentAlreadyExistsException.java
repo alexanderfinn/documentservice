@@ -1,4 +1,4 @@
-package com.alexanderfinn.documentservice.metadata.exceptions;
+package documentservice.metadata.exceptions;
 
 /**
  * @author Alexander Finn

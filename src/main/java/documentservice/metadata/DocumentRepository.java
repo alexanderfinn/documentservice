@@ -1,8 +1,7 @@
-package com.alexanderfinn.documentservice.metadata;
+package documentservice.metadata;
 
-import com.alexanderfinn.documentservice.metadata.exceptions.DocumentAlreadyExistsException;
-import com.alexanderfinn.documentservice.metadata.exceptions.DocumentNotAuthorizedException;
-import com.alexanderfinn.documentservice.metadata.exceptions.DocumentNotFoundException;
+import documentservice.metadata.exceptions.DocumentNotAuthorizedException;
+import documentservice.metadata.exceptions.DocumentNotFoundException;
 
 /**
  * @author Alexander Finn

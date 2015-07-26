@@ -1,4 +1,4 @@
-package com.alexanderfinn.documentservice.api.v1;
+package documentservice.api.v1;
 
 /**
  * @author Alexander Finn
