@@ -1,6 +1,8 @@
 package documentservice.blobstore;
 
 import documentservice.metadata.DocumentMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +17,8 @@ public class FileBlobStore implements BlobStore {
 
   private final String baseFolder;
 
+  final Logger logger = LoggerFactory.getLogger(FileBlobStore.class);
+
   public FileBlobStore(Properties settings) {
     this.baseFolder = settings.getProperty("blobstore.file.baseFolder");
   }
@@ -23,7 +27,9 @@ public class FileBlobStore implements BlobStore {
   public long store(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
     String filePath = baseFolder + File.separator + metadata.getDocumentId() + File.separator + fileId;
     File targetFile = new File(filePath);
-    targetFile.mkdirs();
+    if (targetFile.mkdirs()) {
+      logger.debug("Creating folders for file " + filePath);
+    }
     return 0;
   }
 
