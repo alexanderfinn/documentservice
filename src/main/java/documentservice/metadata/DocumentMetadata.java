@@ -1,5 +1,6 @@
 package documentservice.metadata;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import documentservice.utils.TokenGenerator;
 
 import java.util.ArrayList;
@@ -8,13 +9,17 @@ import java.util.List;
 /**
  * @author Alexander Finn
  */
+@JsonIgnoreProperties({"originalFile"})
 public class DocumentMetadata {
 
-  private final String documentId;
+  private String documentId;
 
-  private final String accessKey;
+  private String accessKey;
 
   private final List<FileMetadata> files = new ArrayList<>();
+
+  public DocumentMetadata() {
+  }
 
   public DocumentMetadata(String documentId, String accessKey) {
     this.documentId = documentId;

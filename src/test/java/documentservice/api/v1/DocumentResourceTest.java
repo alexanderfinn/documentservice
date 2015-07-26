@@ -42,8 +42,8 @@ public class DocumentResourceTest extends JerseyTest {
 
 	@Override
 	protected Application configure() {
-//    enable(TestProperties.LOG_TRAFFIC);
-//    enable(TestProperties.DUMP_ENTITY);
+    enable(TestProperties.LOG_TRAFFIC);
+    enable(TestProperties.DUMP_ENTITY);
     ResourceConfig resourceConfig = new ResourceConfig(DocumentResource.class);
     resourceConfig.register(MultiPartFeature.class);
     return resourceConfig;
@@ -57,7 +57,9 @@ public class DocumentResourceTest extends JerseyTest {
   @Test
 	public void testGetDocument() {
 		final Response response = target("v1/documents/" + documentId1).request().header("Access-Key", accessKey1).get();
-		assertEquals(200, response.getStatus());
+    assertEquals(200, response.getStatus());
+    GetDocumentResponse entity = response.readEntity(GetDocumentResponse.class);
+    assertNotNull(entity.getDocumentMetadata());
 	}
 
 	@Test
