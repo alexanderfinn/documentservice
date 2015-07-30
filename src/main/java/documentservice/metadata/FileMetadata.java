@@ -1,12 +1,19 @@
 package documentservice.metadata;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * @author Alexander Finn
  */
+@JsonIgnoreProperties({"original"})
 public class FileMetadata {
   public static final String FILE_TYPE_ORIGINAL = "ORIGINAL";
   private String fileType;
-  private final String fileId;
+  private String fileId;
+
+  public FileMetadata() {
+
+  }
 
   public FileMetadata(String fileId) {
     this.fileId = fileId;

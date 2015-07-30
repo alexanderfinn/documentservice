@@ -76,11 +76,17 @@ public class DocumentResourceTest extends JerseyTest {
 
   @Test
   public void testUpload() {
+    GetDocumentResponse getDocumentResponse = target("v1/documents/" + documentId1).request().header("Access-Key", accessKey1).get(GetDocumentResponse.class);
+    assertEquals(DocumentMetadata.UPLOAD_STATUS_NOT_STARTED, getDocumentResponse.getDocumentMetadata().getUploadStatus());
+
     File testFile = new File(this.getClass().getResource("testfile.txt").getFile());
     FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file", testFile, MediaType.TEXT_PLAIN_TYPE);
     MultiPart entity = new FormDataMultiPart().bodyPart(fileDataBodyPart);
     UploadResponse response = target("v1/documents/" + documentId1).request().header("Access-Key", accessKey1).post(Entity.entity(entity, MediaType.MULTIPART_FORM_DATA_TYPE), UploadResponse.class);
     assertEquals(testFile.length(), response.getUploadedSize());
+
+    getDocumentResponse = target("v1/documents/" + documentId1).request().header("Access-Key", accessKey1).get(GetDocumentResponse.class);
+    assertEquals(DocumentMetadata.UPLOAD_STATUS_COMPLETED, getDocumentResponse.getDocumentMetadata().getUploadStatus());
   }
 
 }

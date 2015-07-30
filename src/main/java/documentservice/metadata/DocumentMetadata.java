@@ -12,11 +12,15 @@ import java.util.List;
 @JsonIgnoreProperties({"originalFile"})
 public class DocumentMetadata {
 
+  public static final String UPLOAD_STATUS_NOT_STARTED = "NOT STARTED";
+  public static final String UPLOAD_STATUS_IN_PROGRESS = "IN PROGRESS";
+  public static final String UPLOAD_STATUS_COMPLETED = "COMPLETED";
   private String documentId;
 
   private String accessKey;
 
   private final List<FileMetadata> files = new ArrayList<>();
+  private String uploadStatus = UPLOAD_STATUS_NOT_STARTED;
 
   public DocumentMetadata() {
   }
@@ -50,5 +54,14 @@ public class DocumentMetadata {
     fm.setFileType(fileType);
     files.add(fm);
     return fm.getFileId();
+  }
+
+  public String getUploadStatus() {
+    return uploadStatus;
+  }
+
+  public void setUploadStatus(String uploadStatus) {
+
+    this.uploadStatus = uploadStatus;
   }
 }
