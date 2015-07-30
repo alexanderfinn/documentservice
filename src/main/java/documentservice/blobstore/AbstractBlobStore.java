@@ -8,8 +8,9 @@ import documentservice.metadata.DocumentMetadata;
  */
 public abstract class AbstractBlobStore implements BlobStore {
 
-  public void setUploadStatus(DocumentMetadata metadata, String uploadStatus) {
+  public void updateMetadata(DocumentMetadata metadata, String uploadStatus, long uploadedSize) {
     metadata.setUploadStatus(uploadStatus);
+    metadata.setUploadedSize(uploadedSize);
     Configuration.getInstance().getDocumentRepository().put(metadata);
   }
 

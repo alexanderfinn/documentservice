@@ -26,7 +26,7 @@ public class InMemoryBlobStore extends AbstractBlobStore {
   public long store(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
     byte[] bytes = ByteStreams.toByteArray(stream);
     store.put(getStoreKey(metadata.getDocumentId(), fileId), bytes);
-    setUploadStatus(metadata, DocumentMetadata.UPLOAD_STATUS_COMPLETED);
+    updateMetadata(metadata, DocumentMetadata.UPLOAD_STATUS_COMPLETED, bytes.length);
     return bytes.length;
   }
 

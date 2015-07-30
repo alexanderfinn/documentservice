@@ -21,6 +21,7 @@ public class DocumentMetadata {
 
   private final List<FileMetadata> files = new ArrayList<>();
   private String uploadStatus = UPLOAD_STATUS_NOT_STARTED;
+  private long uploadedSize;
 
   public DocumentMetadata() {
   }
@@ -63,5 +64,13 @@ public class DocumentMetadata {
   public void setUploadStatus(String uploadStatus) {
 
     this.uploadStatus = uploadStatus;
+  }
+
+  public long getUploadedSize() {
+    return uploadedSize;
+  }
+
+  public void setUploadedSize(long uploadedSize) {
+    this.uploadedSize = uploadedSize;
   }
 }

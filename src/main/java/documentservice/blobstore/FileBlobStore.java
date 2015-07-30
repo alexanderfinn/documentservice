@@ -2,7 +2,6 @@ package documentservice.blobstore;
 
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
-import documentservice.configuration.Configuration;
 import documentservice.metadata.DocumentMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,11 +28,11 @@ public class FileBlobStore extends AbstractBlobStore {
     File targetFile = getTargetFile(metadata.getDocumentId(), fileId);
     Files.createParentDirs(targetFile);
 
-    setUploadStatus(metadata, DocumentMetadata.UPLOAD_STATUS_IN_PROGRESS);
+    updateMetadata(metadata, DocumentMetadata.UPLOAD_STATUS_IN_PROGRESS, 0);
     FileOutputStream out = new FileOutputStream(targetFile);
     long size = ByteStreams.copy(stream, out);
     out.close();
-    setUploadStatus(metadata, DocumentMetadata.UPLOAD_STATUS_COMPLETED);
+    updateMetadata(metadata, DocumentMetadata.UPLOAD_STATUS_COMPLETED, size);
     return size;
   }
 

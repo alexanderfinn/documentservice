@@ -87,6 +87,7 @@ public class DocumentResourceTest extends JerseyTest {
 
     getDocumentResponse = target("v1/documents/" + documentId1).request().header("Access-Key", accessKey1).get(GetDocumentResponse.class);
     assertEquals(DocumentMetadata.UPLOAD_STATUS_COMPLETED, getDocumentResponse.getDocumentMetadata().getUploadStatus());
+    assertEquals(testFile.length(), getDocumentResponse.getDocumentMetadata().getUploadedSize());
   }
 
 }
