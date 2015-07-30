@@ -41,6 +41,10 @@ public class DocumentMetadata {
     return null;
   }
 
+  public List<FileMetadata> getFiles() {
+    return files;
+  }
+
   public String createFile(String fileType) {
     FileMetadata fm = new FileMetadata(TokenGenerator.getUniqueToken());
     fm.setFileType(fileType);

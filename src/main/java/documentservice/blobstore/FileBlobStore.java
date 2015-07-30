@@ -1,13 +1,12 @@
 package documentservice.blobstore;
 
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
 import documentservice.metadata.DocumentMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -15,26 +14,33 @@ import java.util.Properties;
  */
 public class FileBlobStore implements BlobStore {
 
-  private final String baseFolder;
+  private String baseFolder;
 
   final Logger logger = LoggerFactory.getLogger(FileBlobStore.class);
 
-  public FileBlobStore(Properties settings) {
-    this.baseFolder = settings.getProperty("blobstore.file.baseFolder");
+  @Override
+  public void configure(Properties settings) {
+    this.baseFolder = settings.getProperty("blobstore.file.baseFolder", System.getProperty("java.io.tmpdir") + File.separator + "documentservice");
   }
 
   @Override
   public long store(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
-    String filePath = baseFolder + File.separator + metadata.getDocumentId() + File.separator + fileId;
-    File targetFile = new File(filePath);
-    if (targetFile.mkdirs()) {
-      logger.debug("Creating folders for file " + filePath);
-    }
-    return 0;
+    File targetFile = getTargetFile(metadata.getDocumentId(), fileId);
+    Files.createParentDirs(targetFile);
+
+    FileOutputStream out = new FileOutputStream(targetFile);
+    long size = ByteStreams.copy(stream, out);
+    out.close();
+    return size;
+  }
+
+  private File getTargetFile(String documentId, String fileId) {
+    String filePath = baseFolder + documentId + File.separator + fileId;
+    return new File(filePath);
   }
 
   @Override
-  public OutputStream getStream(String documentId, String fileId) {
-    return null;
+  public InputStream getStream(String documentId, String fileId) throws FileNotFoundException {
+    return new FileInputStream(getTargetFile(documentId, fileId));
   }
 }

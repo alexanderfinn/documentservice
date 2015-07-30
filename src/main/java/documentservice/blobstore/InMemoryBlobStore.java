@@ -3,10 +3,12 @@ package documentservice.blobstore;
 import com.google.common.io.ByteStreams;
 import documentservice.metadata.DocumentMetadata;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Alexander Finn
@@ -16,14 +18,23 @@ public class InMemoryBlobStore implements BlobStore {
   Map<String, byte[]> store = new HashMap<>();
 
   @Override
-  public long store(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
-    byte[] bytes = ByteStreams.toByteArray(stream);
-    store.put(metadata.getDocumentId() + "-" + fileId, bytes);
-    return bytes.length;
+  public void configure(Properties settings) {
+
   }
 
   @Override
-  public OutputStream getStream(String documentId, String fileId) {
-    return null;
+  public long store(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
+    byte[] bytes = ByteStreams.toByteArray(stream);
+    store.put(getStoreKey(metadata.getDocumentId(), fileId), bytes);
+    return bytes.length;
+  }
+
+  private String getStoreKey(String documentId, String fileId) {
+    return documentId + "-" + fileId;
+  }
+
+  @Override
+  public InputStream getStream(String documentId, String fileId) {
+    return new ByteArrayInputStream(store.get(getStoreKey(documentId, fileId)));
   }
 }

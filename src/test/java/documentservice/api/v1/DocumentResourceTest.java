@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Properties;
 
 /**
  * @author Alexander Finn
@@ -37,6 +38,9 @@ public class DocumentResourceTest extends JerseyTest {
 		super.setUp();
     documentId1 = TokenGenerator.getUniqueToken(); accessKey1 = TokenGenerator.getUniqueToken();
 		DocumentMetadata doc1 = new DocumentMetadata(documentId1, accessKey1);
+    Properties settings = new Properties();
+    settings.load(this.getClass().getResourceAsStream("test_bootstrap.properties"));
+    Configuration.initInstance(settings);
 		Configuration.getInstance().getDocumentRepository().put(doc1);
 	}
 
