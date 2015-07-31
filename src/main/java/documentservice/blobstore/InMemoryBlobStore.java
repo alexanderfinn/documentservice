@@ -13,7 +13,7 @@ import java.util.Properties;
 /**
  * @author Alexander Finn
  */
-public class InMemoryBlobStore extends AbstractBlobStore {
+public class InMemoryBlobStore implements BlobStore {
 
   Map<String, byte[]> store = new HashMap<>();
 
@@ -23,10 +23,9 @@ public class InMemoryBlobStore extends AbstractBlobStore {
   }
 
   @Override
-  public long store(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
+  public long put(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
     byte[] bytes = ByteStreams.toByteArray(stream);
     store.put(getStoreKey(metadata.getDocumentId(), fileId), bytes);
-    updateMetadata(metadata, DocumentMetadata.UPLOAD_STATUS_COMPLETED, bytes.length);
     return bytes.length;
   }
 
@@ -35,7 +34,7 @@ public class InMemoryBlobStore extends AbstractBlobStore {
   }
 
   @Override
-  public InputStream getStream(String documentId, String fileId) {
+  public InputStream get(String documentId, String fileId) {
     return new ByteArrayInputStream(store.get(getStoreKey(documentId, fileId)));
   }
 }

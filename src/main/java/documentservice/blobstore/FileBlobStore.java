@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * @author Alexander Finn
  */
-public class FileBlobStore extends AbstractBlobStore {
+public class FileBlobStore implements BlobStore {
 
   private String baseFolder;
 
@@ -24,15 +24,13 @@ public class FileBlobStore extends AbstractBlobStore {
   }
 
   @Override
-  public long store(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
+  public long put(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
     File targetFile = getTargetFile(metadata.getDocumentId(), fileId);
     Files.createParentDirs(targetFile);
 
-    updateMetadata(metadata, DocumentMetadata.UPLOAD_STATUS_IN_PROGRESS, 0);
     FileOutputStream out = new FileOutputStream(targetFile);
     long size = ByteStreams.copy(stream, out);
     out.close();
-    updateMetadata(metadata, DocumentMetadata.UPLOAD_STATUS_COMPLETED, size);
     return size;
   }
 
@@ -42,7 +40,7 @@ public class FileBlobStore extends AbstractBlobStore {
   }
 
   @Override
-  public InputStream getStream(String documentId, String fileId) throws FileNotFoundException {
+  public InputStream get(String documentId, String fileId) throws FileNotFoundException {
     return new FileInputStream(getTargetFile(documentId, fileId));
   }
 }

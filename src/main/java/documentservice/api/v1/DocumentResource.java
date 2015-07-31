@@ -7,6 +7,7 @@ import documentservice.metadata.DocumentRepository;
 import documentservice.metadata.FileMetadata;
 import documentservice.metadata.exceptions.DocumentNotAuthorizedException;
 import documentservice.metadata.exceptions.DocumentNotFoundException;
+import documentservice.utils.FileUpload;
 import documentservice.utils.TokenGenerator;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -59,10 +60,9 @@ public class DocumentResource {
                                @HeaderParam("Access-Key") String accessKey) {
 
     DocumentMetadata metadata = getDocumentMetadata(documentId, accessKey);
-    String fileId = metadata.createFile(FileMetadata.FILE_TYPE_ORIGINAL);
     UploadResponse uploadResponse = new UploadResponse();
     try {
-      long saved = getBlobStore().store(metadata, fileId, is);
+      long saved = new FileUpload(metadata, header.getFileName()).upload(is);
       uploadResponse.setUploadedSize(saved);
     } catch (IOException e) {
       // Throw exception!

@@ -14,8 +14,8 @@ public interface BlobStore {
 
   void configure(Properties settings);
 
-  long store(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException;
+  long put(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException;
 
-  InputStream getStream(String documentId, String fileId) throws FileNotFoundException;
+  InputStream get(String documentId, String fileId) throws FileNotFoundException;
 
 }

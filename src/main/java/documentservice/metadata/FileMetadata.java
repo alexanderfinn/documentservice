@@ -10,6 +10,7 @@ public class FileMetadata {
   public static final String FILE_TYPE_ORIGINAL = "ORIGINAL";
   private String fileType;
   private String fileId;
+  private String fileExtension;
 
   public FileMetadata() {
 
@@ -30,5 +31,18 @@ public class FileMetadata {
 
   public void setFileType(String fileType) {
     this.fileType = fileType;
+  }
+
+  public String getFileType() {
+    return fileType;
+  }
+
+  public String getFileExtension() {
+
+    return fileExtension;
+  }
+
+  public void setFileExtension(String fileExtension) {
+    this.fileExtension = fileExtension;
   }
 }

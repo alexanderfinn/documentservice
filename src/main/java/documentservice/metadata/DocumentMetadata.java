@@ -22,6 +22,7 @@ public class DocumentMetadata {
   private final List<FileMetadata> files = new ArrayList<>();
   private String uploadStatus = UPLOAD_STATUS_NOT_STARTED;
   private long uploadedSize;
+  private String originalFilename;
 
   public DocumentMetadata() {
   }
@@ -50,11 +51,11 @@ public class DocumentMetadata {
     return files;
   }
 
-  public String createFile(String fileType) {
+  public FileMetadata createFile(String fileType) {
     FileMetadata fm = new FileMetadata(TokenGenerator.getUniqueToken());
     fm.setFileType(fileType);
     files.add(fm);
-    return fm.getFileId();
+    return fm;
   }
 
   public String getUploadStatus() {
@@ -72,5 +73,13 @@ public class DocumentMetadata {
 
   public void setUploadedSize(long uploadedSize) {
     this.uploadedSize = uploadedSize;
+  }
+
+  public String getOriginalFilename() {
+    return originalFilename;
+  }
+
+  public void setOriginalFilename(String originalFilename) {
+    this.originalFilename = originalFilename;
   }
 }
