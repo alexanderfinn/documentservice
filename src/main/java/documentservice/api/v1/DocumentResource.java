@@ -77,7 +77,8 @@ public class DocumentResource {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response convert(ConverterConfig converterConfig, @PathParam("documentId") String documentId, @HeaderParam("Access-Key") String accessKey) {
     DocumentMetadata metadata = getDocumentMetadata(documentId, accessKey);
-    Configuration.getInstance().getConverterFactory().getConverter(converterConfig).convert(metadata, accessKey);
+    ConvertResponse response = new ConvertResponse();
+    response.setProcessingStatus(Configuration.getInstance().getConverterFactory().getConverter(converterConfig).convert(metadata, accessKey));
     return Response.ok().build();
   }
 

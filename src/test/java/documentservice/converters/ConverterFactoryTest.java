@@ -16,8 +16,8 @@ public class ConverterFactoryTest extends TestCase {
     private String name;
 
     @Override
-    public void convert(DocumentMetadata metadata, String accessKey) {
-
+    public String convert(DocumentMetadata metadata, String accessKey) {
+      return DocumentMetadata.CONVERTER_STATUS_COMPLETED;
     }
 
     @Override

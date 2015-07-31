@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import documentservice.utils.TokenGenerator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Alexander Finn
@@ -15,6 +17,7 @@ public class DocumentMetadata {
   public static final String UPLOAD_STATUS_NOT_STARTED = "NOT STARTED";
   public static final String UPLOAD_STATUS_IN_PROGRESS = "IN PROGRESS";
   public static final String UPLOAD_STATUS_COMPLETED = "COMPLETED";
+  public static final String CONVERTER_STATUS_COMPLETED = "COMPLETED";
   private String documentId;
 
   private String accessKey;
@@ -24,6 +27,7 @@ public class DocumentMetadata {
   private long uploadedSize;
   private String originalFilename;
   private long originalSize;
+  private final Map<String, String> processingStatuses = new HashMap<>();
 
   public DocumentMetadata() {
   }
@@ -90,5 +94,13 @@ public class DocumentMetadata {
 
   public long getOriginalSize() {
     return originalSize;
+  }
+
+  public Map<String, String> getProcessingStatuses() {
+    return processingStatuses;
+  }
+
+  public void setProcessingStatus(String converterName, String status) {
+    processingStatuses.put(converterName, status);
   }
 }

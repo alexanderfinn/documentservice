@@ -9,8 +9,8 @@ import java.util.Properties;
  */
 public class ImageConverter implements Converter {
   @Override
-  public void convert(DocumentMetadata metadata, String accessKey) {
-
+  public String convert(DocumentMetadata metadata, String accessKey) {
+    return DocumentMetadata.CONVERTER_STATUS_COMPLETED;
   }
 
   @Override
