@@ -60,10 +60,12 @@ public class DocumentResource {
     DocumentMetadata metadata = getDocumentMetadata(documentId, accessKey);
     UploadResponse uploadResponse = new UploadResponse();
     try {
-      long saved = new FileUpload(metadata, header.getFileName()).upload(is);
+      long saved = new FileUpload(metadata, header.getFileName()).upload(is, accessKey);
       uploadResponse.setUploadedSize(saved);
     } catch (IOException e) {
       // Throw exception!
+    } catch (DocumentNotAuthorizedException e) {
+      throw new NotAuthorizedException(Response.status(401).build());
     }
     return Response.ok(uploadResponse).build();
   }
@@ -72,11 +74,11 @@ public class DocumentResource {
   @Path("/{documentId}/convert")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response convert(String converterConfigJson, @PathParam("documentId") String documentId) {
+  public Response convert(String converterConfigJson, @PathParam("documentId") String documentId, @HeaderParam("Access-Key") String accessKey) {
     return Response.ok().build();
   }
 
-  private DocumentMetadata getDocumentMetadata(@PathParam("documentId") String documentId, @HeaderParam("Access-Key") String accessKey) {
+  private DocumentMetadata getDocumentMetadata(String documentId, String accessKey) {
     try {
       return getRepository().get(documentId, accessKey);
     } catch (DocumentNotFoundException e) {

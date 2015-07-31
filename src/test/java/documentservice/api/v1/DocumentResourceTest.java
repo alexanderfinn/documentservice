@@ -41,7 +41,7 @@ public class DocumentResourceTest extends JerseyTest {
     Properties settings = new Properties();
     settings.load(this.getClass().getResourceAsStream("test_bootstrap.properties"));
     Configuration.initInstance(settings);
-		Configuration.getInstance().getDocumentRepository().put(doc1);
+		Configuration.getInstance().getDocumentRepository().put(doc1, accessKey1);
 	}
 
 	@Override
