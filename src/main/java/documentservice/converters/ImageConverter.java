@@ -14,7 +14,12 @@ public class ImageConverter implements Converter {
   }
 
   @Override
-  public void configure(Properties settings) {
+  public void configure(String name, Properties settings) {
 
+  }
+
+  @Override
+  public String getName() {
+    return null;
   }
 }

@@ -11,6 +11,8 @@ public interface Converter {
 
   void convert(DocumentMetadata metadata, String accessKey);
 
-  void configure(Properties settings);
+  void configure(String name, Properties settings);
+
+  String getName();
 
 }

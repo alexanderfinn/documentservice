@@ -18,7 +18,7 @@ public class ConverterFactory {
     for (String name: getConverterNamesList(settings)) {
       try {
         Converter converter = (Converter) Class.forName(settings.getProperty("converter." + name)).newInstance();
-        converter.configure(settings);
+        converter.configure(name, settings);
         converters.put(name, converter);
       } catch (Exception e) {
         logger.error("Failed to load converter " + name + ": " + e);

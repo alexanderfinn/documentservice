@@ -13,14 +13,21 @@ public class ConverterFactoryTest extends TestCase {
 
   public class TestConverter implements Converter {
 
+    private String name;
+
     @Override
     public void convert(DocumentMetadata metadata, String accessKey) {
 
     }
 
     @Override
-    public void configure(Properties settings) {
+    public String getName() {
+      return this.name;
+    }
 
+    @Override
+    public void configure(String name, Properties settings) {
+      this.name = name;
     }
   }
 
