@@ -14,7 +14,7 @@ public class ConverterFactory {
 
   private final Logger logger = LoggerFactory.getLogger(ConverterFactory.class);
 
-  public void configure(Properties settings) {
+  public ConverterFactory(Properties settings) {
     for (String name: getConverterNamesList(settings)) {
       try {
         Converter converter = (Converter) Class.forName(settings.getProperty("converter." + name)).newInstance();

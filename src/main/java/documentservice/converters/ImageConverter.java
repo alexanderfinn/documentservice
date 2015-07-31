@@ -9,7 +9,7 @@ import java.util.Properties;
  */
 public class ImageConverter implements Converter {
   @Override
-  public void convert(DocumentMetadata metadata) {
+  public void convert(DocumentMetadata metadata, String accessKey) {
 
   }
 

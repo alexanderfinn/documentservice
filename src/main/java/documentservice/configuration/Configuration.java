@@ -1,6 +1,7 @@
 package documentservice.configuration;
 
 import documentservice.blobstore.BlobStore;
+import documentservice.converters.ConverterFactory;
 import documentservice.metadata.DocumentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,11 @@ public class Configuration {
   private BlobStore blobStore;
 
   private static final Logger logger = LoggerFactory.getLogger(Configuration.class);
+  private ConverterFactory converterFactory;
 
   private Configuration(Properties settings) {
+    converterFactory = new ConverterFactory(settings);
+
     try {
       documentRepository = (DocumentRepository) Class.forName(settings.getProperty("documentrepository.class",
           "documentservice.metadata.InMemoryRepository")).newInstance();
@@ -55,5 +59,9 @@ public class Configuration {
 
   public static void initInstance(Properties settings) {
     instance = new Configuration(settings);
+  }
+
+  public ConverterFactory getConverterFactory() {
+    return converterFactory;
   }
 }

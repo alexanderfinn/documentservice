@@ -1,6 +1,7 @@
 package documentservice.api.v1;
 
 import documentservice.configuration.Configuration;
+import documentservice.converters.ConverterConfig;
 import documentservice.metadata.DocumentMetadata;
 import documentservice.metadata.DocumentRepository;
 import documentservice.metadata.exceptions.DocumentNotAuthorizedException;
@@ -74,7 +75,9 @@ public class DocumentResource {
   @Path("/{documentId}/convert")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response convert(String converterConfigJson, @PathParam("documentId") String documentId, @HeaderParam("Access-Key") String accessKey) {
+  public Response convert(ConverterConfig converterConfig, @PathParam("documentId") String documentId, @HeaderParam("Access-Key") String accessKey) {
+    DocumentMetadata metadata = getDocumentMetadata(documentId, accessKey);
+    Configuration.getInstance().getConverterFactory().getConverter(converterConfig).convert(metadata, accessKey);
     return Response.ok().build();
   }
 
