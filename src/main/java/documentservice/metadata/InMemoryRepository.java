@@ -14,10 +14,10 @@ public class InMemoryRepository implements DocumentRepository {
   private final Map<String, DocumentMetadata> map = new HashMap<>();
 
   @Override
-  public DocumentMetadata get(String documentId, String documentKey) throws DocumentNotFoundException, DocumentNotAuthorizedException {
+  public DocumentMetadata get(String documentId, String accessKey) throws DocumentNotFoundException, DocumentNotAuthorizedException {
     DocumentMetadata metadata = map.get(documentId);
     if (metadata == null) throw new DocumentNotFoundException();
-    if (!metadata.validateKey(documentKey)) throw new DocumentNotAuthorizedException();
+    if (!metadata.validateKey(accessKey)) throw new DocumentNotAuthorizedException();
     return metadata;
   }
 
@@ -28,7 +28,8 @@ public class InMemoryRepository implements DocumentRepository {
   }
 
   @Override
-  public void put(DocumentMetadata metadata) {
+  public void put(DocumentMetadata metadata, String accessKey) throws DocumentNotAuthorizedException {
+    if (!metadata.validateKey(accessKey)) throw new DocumentNotAuthorizedException();
     map.put(metadata.getDocumentId(), metadata);
   }
 

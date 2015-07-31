@@ -1,6 +1,5 @@
 package documentservice.api.v1;
 
-import documentservice.blobstore.BlobStore;
 import documentservice.configuration.Configuration;
 import documentservice.metadata.DocumentMetadata;
 import documentservice.metadata.DocumentRepository;
@@ -29,16 +28,16 @@ public class DocumentResource {
   public Response createDocument() {
     String accessKey = TokenGenerator.getUniqueToken();
     DocumentMetadata metadata = new DocumentMetadata(TokenGenerator.getUniqueToken(), accessKey);
-    getRepository().put(metadata);
+    try {
+      getRepository().put(metadata, accessKey);
+    } catch (DocumentNotAuthorizedException e) {
+      throw new NotAuthorizedException(Response.status(401).build());
+    }
     return Response.ok(new CreateDocumentResponse(metadata.getDocumentId(), accessKey)).build();
   }
 
   private DocumentRepository getRepository() {
     return Configuration.getInstance().getDocumentRepository();
-  }
-
-  private BlobStore getBlobStore() {
-    return Configuration.getInstance().getBlobStore();
   }
 
   @GET

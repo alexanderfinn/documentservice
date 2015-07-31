@@ -8,11 +8,11 @@ import documentservice.metadata.exceptions.DocumentNotFoundException;
  */
 public interface DocumentRepository {
 
-  DocumentMetadata get(String documentId, String documentKey) throws DocumentNotFoundException, DocumentNotAuthorizedException;
+  DocumentMetadata get(String documentId, String accessKey) throws DocumentNotFoundException, DocumentNotAuthorizedException;
 
   void delete(String documentId, String documentKey) throws DocumentNotFoundException, DocumentNotAuthorizedException;
 
-  void put(DocumentMetadata metadata);
+  void put(DocumentMetadata metadata, String accessKey) throws DocumentNotAuthorizedException;
 
   boolean exists(String documentId);
 }
