@@ -4,7 +4,6 @@ import documentservice.blobstore.BlobStore;
 import documentservice.configuration.Configuration;
 import documentservice.metadata.DocumentMetadata;
 import documentservice.metadata.DocumentRepository;
-import documentservice.metadata.FileMetadata;
 import documentservice.metadata.exceptions.DocumentNotAuthorizedException;
 import documentservice.metadata.exceptions.DocumentNotFoundException;
 import documentservice.utils.FileUpload;
@@ -68,6 +67,14 @@ public class DocumentResource {
       // Throw exception!
     }
     return Response.ok(uploadResponse).build();
+  }
+
+  @POST
+  @Path("/{documentId}/convert")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response convert(String converterConfigJson, @PathParam("documentId") String documentId) {
+    return Response.ok().build();
   }
 
   private DocumentMetadata getDocumentMetadata(@PathParam("documentId") String documentId, @HeaderParam("Access-Key") String accessKey) {
