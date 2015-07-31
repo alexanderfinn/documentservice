@@ -33,6 +33,7 @@ public class FileUpload {
   public void updateMetadata(String uploadStatus, long uploadedSize) {
     metadata.setUploadStatus(uploadStatus);
     metadata.setUploadedSize(uploadedSize);
+    metadata.setOriginalSize(uploadedSize);
     Configuration.getInstance().getDocumentRepository().put(metadata);
   }
 

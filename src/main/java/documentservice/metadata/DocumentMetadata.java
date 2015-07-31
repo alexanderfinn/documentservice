@@ -23,6 +23,7 @@ public class DocumentMetadata {
   private String uploadStatus = UPLOAD_STATUS_NOT_STARTED;
   private long uploadedSize;
   private String originalFilename;
+  private long originalSize;
 
   public DocumentMetadata() {
   }
@@ -81,5 +82,13 @@ public class DocumentMetadata {
 
   public void setOriginalFilename(String originalFilename) {
     this.originalFilename = originalFilename;
+  }
+
+  public void setOriginalSize(long originalSize) {
+    this.originalSize = originalSize;
+  }
+
+  public long getOriginalSize() {
+    return originalSize;
   }
 }
