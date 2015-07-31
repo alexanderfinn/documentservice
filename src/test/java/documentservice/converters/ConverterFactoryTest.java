@@ -14,7 +14,7 @@ public class ConverterFactoryTest extends TestCase {
   public class TestConverter implements Converter {
 
     @Override
-    public void convert(DocumentMetadata metadata) {
+    public void convert(DocumentMetadata metadata, String accessKey) {
 
     }
 
@@ -26,12 +26,12 @@ public class ConverterFactoryTest extends TestCase {
 
   public void testGetConverterNamesList() throws Exception {
 
-    ConverterFactory factory = new ConverterFactory();
     Properties settings = new Properties();
     settings.setProperty("converter.1", "documentservice.converters.ConverterFactoryTest.TestConverter");
     settings.setProperty("converter.test", "documentservice.converters.ConverterFactoryTest.TestConverter");
     settings.setProperty("converter.test.notworking", "documentservice.converters.ConverterFactoryTest.TestConverter");
     settings.setProperty("converter.", "documentservice.converters.ConverterFactoryTest.TestConverter");
+    ConverterFactory factory = new ConverterFactory(settings);
     List<String> names = factory.getConverterNamesList(settings);
     assertEquals(2, names.size());
     assertTrue(names.contains("1"));
