@@ -18,6 +18,7 @@ public class DocumentMetadata {
   public static final String UPLOAD_STATUS_IN_PROGRESS = "IN PROGRESS";
   public static final String UPLOAD_STATUS_COMPLETED = "COMPLETED";
   public static final String CONVERTER_STATUS_COMPLETED = "COMPLETED";
+  public static final String CONVERTER_STATUS_FAILED = "FAILED";
   private String documentId;
 
   private String accessKey;

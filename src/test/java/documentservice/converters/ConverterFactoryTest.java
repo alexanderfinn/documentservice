@@ -16,7 +16,7 @@ public class ConverterFactoryTest extends TestCase {
     private String name;
 
     @Override
-    public String convert(DocumentMetadata metadata, String accessKey) {
+    public String convert(DocumentMetadata metadata, ConverterConfig config, String accessKey) {
       return DocumentMetadata.CONVERTER_STATUS_COMPLETED;
     }
 

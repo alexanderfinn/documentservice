@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"original"})
 public class FileMetadata {
   public static final String FILE_TYPE_ORIGINAL = "ORIGINAL";
+  public static final String FILE_TYPE_DERIVATIVE = "DERIVATIVE";
   private String fileType;
   private String fileId;
   private String fileExtension;

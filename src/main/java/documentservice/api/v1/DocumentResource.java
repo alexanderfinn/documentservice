@@ -2,6 +2,7 @@ package documentservice.api.v1;
 
 import documentservice.configuration.Configuration;
 import documentservice.converters.ConverterConfig;
+import documentservice.converters.ConvertionException;
 import documentservice.metadata.DocumentMetadata;
 import documentservice.metadata.DocumentRepository;
 import documentservice.metadata.exceptions.DocumentNotAuthorizedException;
@@ -64,7 +65,7 @@ public class DocumentResource {
       long saved = new FileUpload(metadata, header.getFileName()).upload(is, accessKey);
       uploadResponse.setUploadedSize(saved);
     } catch (IOException e) {
-      // Throw exception!
+      Response.serverError().build();
     } catch (DocumentNotAuthorizedException e) {
       throw new NotAuthorizedException(Response.status(401).build());
     }
@@ -75,11 +76,18 @@ public class DocumentResource {
   @Path("/{documentId}/convert")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response convert(ConverterConfig converterConfig, @PathParam("documentId") String documentId, @HeaderParam("Access-Key") String accessKey) {
+  public Response convert(ConverterConfig converterConfig,
+                          @PathParam("documentId") String documentId,
+                          @HeaderParam("Access-Key") String accessKey) {
     DocumentMetadata metadata = getDocumentMetadata(documentId, accessKey);
     ConvertResponse response = new ConvertResponse();
-    response.setProcessingStatus(Configuration.getInstance().getConverterFactory().getConverter(converterConfig).convert(metadata, accessKey));
-    return Response.ok().build();
+    try {
+      response.setProcessingStatus(Configuration.getInstance().getConverterFactory().getConverter(converterConfig).convert(metadata, converterConfig, accessKey));
+      return Response.ok(response).build();
+    } catch (ConvertionException e) {
+      response.setProcessingStatus(DocumentMetadata.CONVERTER_STATUS_FAILED);
+      return Response.serverError().entity(response).build();
+    }
   }
 
   private DocumentMetadata getDocumentMetadata(String documentId, String accessKey) {

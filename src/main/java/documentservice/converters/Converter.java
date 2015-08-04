@@ -9,7 +9,7 @@ import java.util.Properties;
  */
 public interface Converter {
 
-  String convert(DocumentMetadata metadata, String accessKey);
+  String convert(DocumentMetadata metadata, ConverterConfig config, String accessKey) throws ConvertionException;
 
   void configure(String name, Properties settings);
 

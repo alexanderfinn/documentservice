@@ -3,9 +3,7 @@ package documentservice.blobstore;
 import com.google.common.io.ByteStreams;
 import documentservice.metadata.DocumentMetadata;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -27,6 +25,11 @@ public class InMemoryBlobStore implements BlobStore {
     byte[] bytes = ByteStreams.toByteArray(stream);
     store.put(getStoreKey(metadata.getDocumentId(), fileId), bytes);
     return bytes.length;
+  }
+
+  @Override
+  public OutputStream getOutputStream(DocumentMetadata metadata, String fileId) throws IOException {
+    return new ByteArrayOutputStream();
   }
 
   private String getStoreKey(String documentId, String fileId) {

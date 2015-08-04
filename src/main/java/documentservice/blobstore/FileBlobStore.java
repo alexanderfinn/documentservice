@@ -25,13 +25,18 @@ public class FileBlobStore implements BlobStore {
 
   @Override
   public long put(DocumentMetadata metadata, String fileId, InputStream stream) throws IOException {
-    File targetFile = getTargetFile(metadata.getDocumentId(), fileId);
-    Files.createParentDirs(targetFile);
-
-    FileOutputStream out = new FileOutputStream(targetFile);
+    OutputStream out = getOutputStream(metadata, fileId);
     long size = ByteStreams.copy(stream, out);
     out.close();
     return size;
+  }
+
+  @Override
+  public OutputStream getOutputStream(DocumentMetadata metadata, String fileId) throws IOException {
+    File targetFile = getTargetFile(metadata.getDocumentId(), fileId);
+    Files.createParentDirs(targetFile);
+
+    return new FileOutputStream(targetFile);
   }
 
   private File getTargetFile(String documentId, String fileId) {

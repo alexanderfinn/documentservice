@@ -100,4 +100,6 @@
         <jersey.version>2.19</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <repositories>
+    </repositories>
 </project>
